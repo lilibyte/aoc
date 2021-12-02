@@ -1,12 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 int main() {
-  int horiz = 0;
-  int depth = 0;
-  int depth2 = 0;
-  int all = 0;
-  int value;
+  int horiz = 0, depth = 0, depth2 = 0, all = 0, value = 0;
   char line[11];
   for (int i = 0; i < 1000; ++i) {
     fgets(line, 11, stdin);
