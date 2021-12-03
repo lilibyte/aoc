@@ -194,8 +194,8 @@ if __name__ == "__main__":
         parser.add_argument("input", help="input file, defaults to stdin")
         parser.add_argument("-d", "--delay", type=int, default=10,
                             help="delay in miliseconds, defaults to 10")
-        parser.add_argument("-l", "--lines", action="store_true", default=True,
-                            help="draw line behind submarine")
+        parser.add_argument("-l", "--lines", action="store_false", default=True,
+                            help="don't draw line behind submarine")
         parser.add_argument("-c", "--critters", action="store_true", default=False,
                             help="draw cute sea friends")
         args = parser.parse_args()
