@@ -9,10 +9,9 @@ for l in f:
     xs = -1 if x2 - x1 < 0 else 1 if x2 - x1 > 0 else 0
     ys = -1 if y2 - y1 < 0 else 1 if y2 - y1 > 0 else 0
     for i in range(max(abs(x2 - x1), abs(y2 - y1)) + 1):
-        x, y = x1 + xs * i, y1 + ys * i
-        p2[x, y] += 1
-        if min(abs(x2 - x1), abs(y2 - y1)) == 0:
-            p1[x, y] += 1
+        p2[(x1 + xs * i, y1 + ys * i)] += 1
+        if not min(abs(x2 - x1), abs(y2 - y1)):
+            p1[(x1 + xs * i, y1 + ys * i)] += 1
 
 print(sum(1 for i in p1.values() if i > 1))
 print(sum(1 for i in p2.values() if i > 1))
