@@ -1,8 +1,6 @@
 from functools import lru_cache
 lf = [int(i) for i in open("input").read().strip().split(",")]
 
-t = len(lf)
-
 @lru_cache(2048)
 def r(t, s=0):
     f = 0
@@ -14,6 +12,4 @@ def r(t, s=0):
         t -= 1
     return f
 
-for i in lf:
-    t += r(i)
-print(t)
+print(sum(r(i) for i in lf) + len(lf))
