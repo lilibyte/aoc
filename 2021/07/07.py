@@ -1,10 +1,6 @@
 f = sorted(int(i) for i in open("input").read().strip().split(","))
 
-m = f[len(f) // 2]
-l, p1, p2 = 0, 0, [0 for x in range(f[-1] + 1)]
-
-for cr in f:
-    p1 += abs(m - cr)
+l, p2 = 0, [0 for x in range(f[-1] + 1)]
 
 for i in range(f[-1] + 1):
     for cr in f:
@@ -15,5 +11,5 @@ for i in range(f[-1] + 1):
         break
     l = p2[i]
 
-print(p1)
+print(sum(abs(f[len(f) // 2] - cr) for cr in f))
 print(min(i for i in p2 if i > 0))
