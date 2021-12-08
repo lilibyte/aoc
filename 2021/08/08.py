@@ -54,7 +54,6 @@ def map_segments(sp):
         elif len(w) == 5 and d[2] not in w:
             w = w.replace(d[0], "").replace(d[1], "")
             w = w.replace(d[3], "").replace(d[5], "")
-            w = w.replace(d[2], "")
             d[6] = w
         elif len(w) == 7:
             w = w.replace(d[0], "").replace(d[1], "")
