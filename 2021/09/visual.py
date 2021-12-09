@@ -32,7 +32,6 @@ class Visual:
         self.pad.refresh(0, 0, 0, 0, self.y - 1, self.x - 1)
 
     def draw_low_point(self, c):
-        # for c in self.low_points:
         self.pad.addch(c[0], c[1], str(input_file[c[0]][c[1]]), curses.A_REVERSE)
         self.stdscr.refresh()
         try:
