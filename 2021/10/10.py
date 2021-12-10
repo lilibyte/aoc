@@ -16,14 +16,14 @@ for l in f:
                 p1 += scp[c]
                 break
             else:
-                del cc[-1]
+                cc.pop()
     else:
         t, cc = 0, []
         for c in reversed(l):
             if c in cl:
                 cc.append(c)
             elif op[c] in cc:
-                del cc[-1]
+                cc.pop()
             else:
                 t *= 5
                 t += acp[op[c]]
