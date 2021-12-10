@@ -1,5 +1,6 @@
 import curses
 import sys
+import argparse
 from functools import reduce
 from operator import mul
 
@@ -8,6 +9,11 @@ class Visual:
 
     def __init__(self, stdscr):
         curses.curs_set(0)
+        try:
+            curses.init_pair(1, curses.COLOR_WHITE, 124)
+            curses.init_pair(2, curses.COLOR_WHITE, 130)
+        except curses.error:
+            args.color = False
         self.stdscr = stdscr
         self.pad = curses.newpad(110, 110)
         self.y, self.x = self.stdscr.getmaxyx()
@@ -31,8 +37,11 @@ class Visual:
         self.stdscr.refresh()
         self.pad.refresh(0, 0, 0, 0, self.y - 1, self.x - 1)
 
-    def draw_low_point(self, c):
-        self.pad.addch(c[0], c[1], str(input_file[c[0]][c[1]]), curses.A_REVERSE)
+    def draw_low_point(self, c, color=False):
+        if color and args.color:
+            self.pad.addch(c[0], c[1], str(input_file[c[0]][c[1]]), curses.color_pair(color))
+        else:
+            self.pad.addch(c[0], c[1], str(input_file[c[0]][c[1]]), curses.A_REVERSE)
         self.stdscr.refresh()
         try:
             self.pad.refresh(c[0], c[1], c[0], c[1], self.y - 1, self.x - 1)
@@ -47,7 +56,7 @@ class Visual:
                     if (not x or input_file[y][x - 1] > i) \
                             and (x == len(l) - 1 or input_file[y][x + 1] > i):
                         self.low_points.append((y, x))
-                        self.draw_low_point((y, x))
+                        self.draw_low_point((y, x), 1)
 
     def check_pos(self, y, x):
         aux = []
@@ -62,6 +71,7 @@ class Visual:
         return aux
 
     def find_basins(self):
+        t = set()
         for c in self.low_points:
             y, x = c
             b = set()
@@ -69,22 +79,37 @@ class Visual:
             aux = self.check_pos(y, x)
             for c in aux:
                 b.add(c)
+                t.add(c)
+                self.draw_low_point(c, 2)
             prev = 0
             while True:
                 aux = []
                 for c in b:
                     aux.extend(self.check_pos(c[0], c[1]))
                 for c in aux:
+                    if c not in t:
+                        curses.napms(args.delay // 100)
+                        if c in self.low_points:
+                            self.draw_low_point(c, 1)
+                        else:
+                            self.draw_low_point(c, 2)
                     b.add(c)
-                    self.draw_low_point(c)
+                    t.add(c)
                 if len(b) == prev:
                     break
                 prev = len(b)
             self.total.append(len(b))
+            curses.napms(args.delay)
 
 
 if __name__ == "__main__":
     try:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-d", "--delay", type=int, default=10,
+                            help="specify delay in ms, default is 10"),
+        parser.add_argument("-c", "--color", action="store_true",
+                            help="use colors in visualization")
+        args = parser.parse_args()
         input_file = [[int(i) for i in l] for l in open("input").read().splitlines()]
         curses.wrapper(Visual)
     except KeyboardInterrupt:
