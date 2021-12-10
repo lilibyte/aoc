@@ -4,11 +4,11 @@ op = {"(": ")", "[": "]", "{": "}", "<": ">"}
 scp = {")": 3, "]": 57, "}": 1197, ">": 25137}
 acp = {")": 1, "]": 2, "}": 3, ">": 4}
 cl = {c: o for o, c in op.items()}
-p1, p2, il, s = 0, 0, [], []
+p1, p2 = 0, []
 
 for l in f:
     cc = []
-    for i, c in enumerate(l):
+    for c in l:
         if c in op:
             cc.append(c)
         else:
@@ -16,24 +16,18 @@ for l in f:
                 p1 += scp[c]
                 break
             else:
-                cc.reverse()
-                cc.remove(cl[c])
-                cc.reverse()
+                del cc[-1]
     else:
-        t = 0
-        cc = []
+        t, cc = 0, []
         for c in reversed(l):
             if c in cl:
                 cc.append(c)
             elif op[c] in cc:
-                cc.reverse()
-                cc.remove(op[c])
-                cc.reverse()
+                del cc[-1]
             else:
                 t *= 5
                 t += acp[op[c]]
-        s.append(t)
-        continue
+        p2.append(t)
 
 print(p1)
-print(sorted(s)[len(s)//2])
+print(sorted(p2)[len(p2) // 2])
