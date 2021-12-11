@@ -11,51 +11,43 @@ def fl(y, x):
     if i < 100:
         p1 += 1
     if y:
-        if f[y - 1][x] < 9:
-            if (y - 1, x) not in af:
-                f[y - 1][x] += 1
+        if f[y - 1][x] < 9 and (y - 1, x) not in af:
+            f[y - 1][x] += 1
         else:
             fl(y - 1, x)
     if y < len(f) - 1:
-        if f[y + 1][x] < 9:
-            if (y + 1, x) not in af:
-                f[y + 1][x] += 1
+        if f[y + 1][x] < 9 and (y + 1, x) not in af:
+            f[y + 1][x] += 1
         else:
             fl(y + 1, x)
     if x:
-        if f[y][x - 1] < 9:
-            if(y, x - 1) not in af:
-                f[y][x - 1] += 1
+        if f[y][x - 1] < 9 and (y, x - 1) not in af:
+            f[y][x - 1] += 1
         else:
             fl(y, x - 1)
     if x < len(f[y]) - 1:
-        if f[y][x + 1] < 9:
-            if (y, x + 1) not in af:
-                f[y][x + 1] += 1
+        if f[y][x + 1] < 9 and (y, x + 1) not in af:
+            f[y][x + 1] += 1
         else:
             fl(y, x + 1)
     if y and x:
-        if f[y - 1][x - 1] < 9:
-            if (y - 1, x - 1) not in af:
-                f[y - 1][x - 1] += 1
+        if f[y - 1][x - 1] < 9 and (y - 1, x - 1) not in af:
+            f[y - 1][x - 1] += 1
         else:
             fl(y - 1, x - 1)
     if y < len(f) - 1 and x:
-        if f[y + 1][x - 1] < 9:
-            if (y + 1, x - 1) not in af:
-                f[y + 1][x - 1] += 1
+        if f[y + 1][x - 1] < 9 and (y + 1, x - 1) not in af:
+            f[y + 1][x - 1] += 1
         else:
             fl(y + 1, x - 1)
     if y and x < len(f[y]) - 1:
-        if f[y - 1][x + 1] < 9:
-            if (y - 1, x + 1) not in af:
-                f[y - 1][x + 1] += 1
+        if f[y - 1][x + 1] < 9 and (y - 1, x + 1) not in af:
+            f[y - 1][x + 1] += 1
         else:
             fl(y - 1, x + 1)
     if y < len(f) - 1 and x < len(f[y]) - 1:
-        if f[y + 1][x + 1] < 9:
-            if (y + 1, x + 1) not in af:
-                f[y + 1][x + 1] += 1
+        if f[y + 1][x + 1] < 9 and (y + 1, x + 1) not in af:
+            f[y + 1][x + 1] += 1
         else:
             fl(y + 1, x + 1)
 
@@ -76,6 +68,5 @@ while True:
         if i > 100:
             break
     i += 1
-    s = 0
 
 print("part 1:", p1)
