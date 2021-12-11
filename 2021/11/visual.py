@@ -2,7 +2,6 @@ import curses
 import sys
 import argparse
 import itertools
-import time
 
 
 class Visual:
@@ -18,7 +17,6 @@ class Visual:
         self.stdscr.addstr(y + 3, 0, str(self.i))
         self.stdscr.refresh()
         curses.napms(args.delay)
-        time.sleep(5)
         while True:
             if not sum(1 for e in itertools.chain(*self.f) if e != 0):
                 if self.i > args.min:
