@@ -19,10 +19,7 @@ def fold(d, n):
         if cc > n % mx:
             newc = abs(cc - (n % mx) * 2)
             newc = (c[0], newc) if d == "y" else (newc, c[1])
-            if tp.get(newc):
-                tp[newc] += 1
-            else:
-                tp[newc] = 1
+            tp[newc] += 1
             del tp[c]
     if d == "y":
         maxy -= (n - 1)
@@ -32,10 +29,7 @@ def fold(d, n):
 def draw_paper():
     for y in range(maxy+1):
         for x in range(maxx+1):
-            if (x, y) in tp:
-                print("#", end="")
-            else:
-                print(".", end="")
+            print("█" if (x, y) in tp else " ", end="")
         print()
 
 for c, i in enumerate(fi, start=1):
