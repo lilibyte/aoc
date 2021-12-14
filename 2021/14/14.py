@@ -1,4 +1,3 @@
-from regex import sub, compile, findall
 from collections import defaultdict
 
 f = [l.strip() for l in __import__('fileinput').input() if l.strip()]
