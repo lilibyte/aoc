@@ -1,6 +1,13 @@
 from fileinput import input
 import re
 
+def static(**kwargs):
+	def decorate(func):
+		for k in kwargs:
+			setattr(func, k, kwargs[k])
+		return func
+	return decorate
+
 def atoi(s: str, base: int = None):
 	if isinstance(s, int):
 		return s

@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aoc"
+version = "0.0.1"
+authors = [
+	{ name="lilibyte", email="self@lilibyte.net" },
+]
+description = "personal aoc library"
