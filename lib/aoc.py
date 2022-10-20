@@ -1,5 +1,31 @@
 from fileinput import input
+from more_itertools import consume
+from toolz import pipe, isiterable
 import re
+
+def iseven(i):
+	return i % 2 == 0
+
+def isodd(i):
+	return i % 2 == 1
+
+def ipipe(it, *funcs):
+	"Pass iterator to toolz.pipe() and yield its result"
+	if not isiterable(it):
+		it = [it]
+	for i in it:
+		yield pipe(i, *funcs)
+
+def cpipe(it, *funcs):
+	"Pass iterator to toolz.pipe() and discard its result"
+	if not isiterable(it):
+		it = [it]
+	for i in it:
+		pipe(i, *funcs)
+
+def cmap(func, data):
+	"Consume map object and discard its evaluated form"
+	consume(map(func, data))
 
 def static(**kwargs):
 	def decorate(func):
