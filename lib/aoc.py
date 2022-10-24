@@ -2,6 +2,21 @@ from fileinput import input
 from more_itertools import consume
 from toolz import pipe, isiterable
 import re
+import inspect
+
+def split(i, delim=None, keep_delim=False):
+	if not i:
+		return [""]
+	if not hasattr(i, "split"):
+		raise TypeError(f"unsupported argument type for {inspect.stack()[0][3]}: '{type(i)}")
+	if delim and not isinstance(delim, str):
+		delim = str(delim)
+	if (not i.count(" ") and delim in ("", None)) or delim == "":
+		return list(i)
+	elif keep_delim:
+		return [s or (delim or " ") for s in i.split(delim or " ")]
+	else:
+		return i.split(delim or " ")
 
 def iseven(i):
 	return i % 2 == 0
