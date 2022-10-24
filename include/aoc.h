@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+// .local/lib/ -----
+// gcc -lcrypto -o aoc.o -c ~/.local/include/aoc.c
+// gcc -lcrypto -shared -o libaoc.so aoc.o
+// location of main() ------
+// gcc -laoc md5.c
+
 // https://stackoverflow.com/q/11761703/
 #define GET_MACRO(_0, _1, _2, NAME, ...) NAME
 #define md5(...) GET_MACRO(__VA_ARGS__, md53, md52, md51)(__VA_ARGS__)
