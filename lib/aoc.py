@@ -9,7 +9,7 @@ def split(i, delim=None, keep_delim=False):
 		return [""]
 	if not hasattr(i, "split"):
 		raise TypeError(f"unsupported argument type for {inspect.stack()[0][3]}: '{type(i)}")
-	if delim and not isinstance(delim, str):
+	if delim is not None and not isinstance(delim, str):
 		delim = str(delim)
 	if (not i.count(" ") and delim in ("", None)) or delim == "":
 		return list(i)
