@@ -1,6 +1,7 @@
-from fileinput import input
+from fileinput import input as finput
 from more_itertools import consume
 from toolz import pipe, isiterable
+import sys
 import re
 import inspect
 
@@ -49,6 +50,12 @@ def static(**kwargs):
 		return func
 	return decorate
 
+def input():
+	"Read file via argv or stdin and return as string"
+	if len(sys.argv) > 1:
+		return open(sys.argv[1]).read()
+	return sys.stdin.read()
+
 def atoi(s: str, base: int = None):
 	if isinstance(s, int):
 		return s
@@ -61,7 +68,7 @@ def atoi(s: str, base: int = None):
 
 def scan(re_str: str):
 	r = re.compile(re_str)
-	for line in input():
+	for line in finput():
 		for m in re.finditer(r, line):
 			if len(m.groups()) == 1:
 				yield atoi(m.group(1))
