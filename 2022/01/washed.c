@@ -10,25 +10,25 @@ long int getn()
 	return c == EOF ? LONG_MIN+1 : r;
 }
 
-void rot(long int top[3], long int tmp)
+void rot(long int top[3], long int sum)
 {
-	if (tmp > top[0]) {
+	if (sum > top[0]) {
 		top[2] = top[1];
 		top[1] = top[0];
-		top[0] = tmp;
+		top[0] = sum;
 	}
-	else if (tmp > top[1]) {
+	else if (sum > top[1]) {
 		top[2] = top[1];
-		top[1] = tmp;
+		top[1] = sum;
 	}
-	else if (tmp > top[2])
-		top[2] = tmp;
+	else if (sum > top[2])
+		top[2] = sum;
 }
 
 int main()
 {
 	long int top[3];
-	long int n, tmp = 0;
+	long int n, sum = 0;
 	bool cont = true;
 	while (cont) {
 		switch (n = getn()) {
@@ -36,11 +36,11 @@ int main()
 			cont = false;
 			break;
 		case LONG_MIN:
-			rot(top, tmp);
-			tmp = 0;
+			rot(top, sum);
+			sum = 0;
 			break;
 		default:
-			tmp += n;
+			sum += n;
 		}
 	}
 	printf("%ld\n", top[0]);
