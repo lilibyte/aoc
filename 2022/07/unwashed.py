@@ -5,12 +5,6 @@ cwd = None
 dirs = defaultdict(lambda: {"parent": None, "total": 0, "ctotal": 0})
 listing = False
 
-def path(key):
-	if dirs[key].get("parent") is None:
-		return key
-	if dirs[key].get("parent") == "/":
-		return "/" + key
-	return dirs[key]["parent"] + "/" + key
 for line in input():
 	line = line.strip()
 	if line.startswith("$ cd"):
