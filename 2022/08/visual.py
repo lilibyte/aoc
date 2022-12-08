@@ -46,15 +46,17 @@ class Visual:
 		curses.init_pair(13, 94, 82)
 		curses.init_pair(14, 94, 118)
 		self.stdscr = stdscr
+		self.stdscr.nodelay(1)
 		self.my, self.mx = self.stdscr.getmaxyx()
 		self.y, self.x = 0, 0
 		self.pad = curses.newpad(Y+10,X+10)
-		self.draw()
+		self.draw(init=True)
 		self.stdscr.refresh()
 		self.pad.refresh(self.y,self.x, 0,0, self.my-1, self.mx-1)
-		self.getkey()
+		while True:
+			self.draw()
 
-	def draw(self):
+	def draw(self, init=False):
 		for y, row in enumerate(f):
 			for x, col in enumerate(row):
 				v = sum(check(y, x))
@@ -63,33 +65,35 @@ class Visual:
 				elif x == X or y == Y:
 					self.pad.addstr(y, x, str(col), curses.color_pair(14))
 				else:
-					self.pad.addstr(y, x, str(col), curses.color_pair(10+v))
+					self.pad.addstr(y, x, str(col), curses.color_pair(10 if init else 10+v))
+				if not init:
+					self.getkey()
+					self.stdscr.refresh()
+					self.pad.refresh(self.y,self.x, 0,0, self.my-1, self.mx-1)
+					curses.napms(1)
 
 	def getkey(self):
-		while True:
-			c = self.stdscr.getch()
-			if c in (ord("q"), ord("Q"), ord("Z")):
-				exit(0)
-			elif c == curses.KEY_RESIZE:
-				self.my, self.mx = self.stdscr.getmaxyx()
-			elif c in (ord("j"), curses.KEY_DOWN):
-				self.y = min(Y-self.my+1, self.y + 1)
-			elif c in (ord("k"), curses.KEY_UP):
-				self.y = max(0, self.y - 1)
-			elif c in (ord("h"), curses.KEY_LEFT):
-				self.x = max(0, self.x - 1)
-			elif c in (ord("l"), curses.KEY_RIGHT):
-				self.x = min(X-self.mx+1, self.x + 1)
-			elif c in (ord("g"), curses.KEY_PPAGE):
-				self.y = 0
-			elif c in (ord("G"), curses.KEY_NPAGE):
-				self.y = Y-self.my+1
-			elif c in (ord("$")):
-				self.x = X-self.mx+1
-			elif c in (ord("_")):
-				self.x = 0
-			self.stdscr.refresh()
-			self.pad.refresh(self.y,self.x, 0,0, self.my-1, self.mx-1)
+		c = self.stdscr.getch()
+		if c in (ord("q"), ord("Q"), ord("Z")):
+			exit(0)
+		elif c == curses.KEY_RESIZE:
+			self.my, self.mx = self.stdscr.getmaxyx()
+		elif c in (ord("j"), curses.KEY_DOWN):
+			self.y = min(Y-self.my+1, self.y + 1)
+		elif c in (ord("k"), curses.KEY_UP):
+			self.y = max(0, self.y - 1)
+		elif c in (ord("h"), curses.KEY_LEFT):
+			self.x = max(0, self.x - 1)
+		elif c in (ord("l"), curses.KEY_RIGHT):
+			self.x = min(X-self.mx+1, self.x + 1)
+		elif c in (ord("g"), curses.KEY_PPAGE):
+			self.y = 0
+		elif c in (ord("G"), curses.KEY_NPAGE):
+			self.y = Y-self.my+1
+		elif c in (ord("$"),):
+			self.x = X-self.mx+1
+		elif c in (ord("_"),):
+			self.x = 0
 
 if __name__ == "__main__":
 	try:
