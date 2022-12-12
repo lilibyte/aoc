@@ -44,11 +44,11 @@ def bfs(start, dest):
 		if node == dest:
 			return length + 1
 		for neighbor in heights[node]:
-				if neighbor is None or neighbor.cost > node.cost + 1:
-					continue
-				if neighbor not in visited:
-					visited.add(neighbor)
-					q.append((neighbor, length + 1))
+			if neighbor is None or neighbor.cost > node.cost + 1:
+				continue
+			if neighbor not in visited:
+				visited.add(neighbor)
+				q.append((neighbor, length + 1))
 
 print(bfs(start, dest) - 1)
 
