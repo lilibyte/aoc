@@ -61,6 +61,8 @@ def atoi(s: str, base: int = None):
 		return s
 	elif base:
 		return int(s, base)
+	elif (s[0] == "-" or s[0] == "+") and s[1:].isdigit():
+		return int(s)
 	elif s.isdigit():
 		return int(s)
 	else:
