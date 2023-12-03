@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
 #define MAX 142
-/* #define MAX 10 */
 
 char schematic[MAX][MAX];
 struct gear { int len; int ratio; };
@@ -110,7 +108,7 @@ int ispart(int x, int y)
 	return 0;
 }
 
-char *getnums(int *x, int *y, int *gold)
+char *getnums(int *x, int *y)
 {
 	static int _x = 0, _y = 0;
 	if (_y >= MAX)
@@ -138,7 +136,7 @@ int main()
 	fill();
 	int silver = 0, gold = 0;
 	int x = 0, y = 0;
-	while (getnums(&x, &y, &gold))
+	while (getnums(&x, &y))
 		silver += ispart(x, y);
 	for (int y = 0; y < MAX; ++y)
 		for (int x = 0; x < MAX; ++x)
